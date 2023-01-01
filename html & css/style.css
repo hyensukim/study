@@ -1,0 +1,8 @@
+*{margin:0px;}
+
+div{background : red; height : 50px; margin-bottom:10px;}
+span{display : inline-block; background-color: inherit; color:white; font-size: 50px; z-index:0;}
+span:active{background-color:blue;}
+.div1 {display : flex; position : fixed; height : 50px; z-index: 10; top:50%; left:50%; background-color: gray; align-items: center; flex-direction:row; justify-content:space-evenly}
+.div1:hover{background-color:orange; height:100px;}
+.div1:after{content:"00000000000000000000000000000";color: black; height:10px;}
