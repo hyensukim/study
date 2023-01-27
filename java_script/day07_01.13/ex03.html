@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>연습</title>
+        <script>
+            window.addEventListener("DOMContentLoaded",function(){
+                // 선택
+                const textEl = document.getElementById("text");
+
+                //속성 추가
+                const button1El = document.getElementById("button1");
+                button1El.addEventListener("click",function(){
+                    textEl.setAttribute("price",10000);
+                    textEl.dataset.price = 100000;
+                    textEl.dataset.goodsNm="상품1";
+                    textEl.classList.add("text4");
+                    // console.log(textEl.dataset);
+                });
+
+                //속성 변경
+                const button2El = document.getElementById("button2");
+                button2El.addEventListener("click",function(){
+                    textEl.setAttribute("price",20000);
+                });
+
+                //속성 조회
+                const button3El = document.getElementById("button3");
+                button3El.addEventListener("click",function(){
+                    const price = textEl.getAttribute("price");
+                    alert(price);
+                });
+
+                //속성 제거
+                const button4El = document.getElementById("button4");
+                button4El.addEventListener("click",function(){
+                    textEl.removeAttribute("price");
+                    textEl.classList.toggle("text4");
+                    textEl.classList.remove("text2");
+                });
+
+            });
+        </script>
+    </head>
+    <body>
+        <input type="text" id="text" class="text1 text2">
+        <br>
+        <button type="button" id="button1">속성 추가</button>
+        <button type="button" id="button2">속성 변경</button>
+        <button type="button" id="button3">속성 조회</button>
+        <button type="button" id="button4">속성 제거</button>
+    </body>
+</html>
