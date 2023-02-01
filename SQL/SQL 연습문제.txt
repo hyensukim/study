@@ -1,24 +1,40 @@
 SQL 연습문제
+
 1/21(강의 자료 DML(2일차) - WHERE조건 / 비교 ~ ORDER BY)
 	- ORDER BY 예제 2번
 	도서를 가격순으로 검색하고, 가격이 같으면 이름순으로 검색.
+
 	ORDER BY price, bookname;
+
 1/22(강의자료 DML(2일차) - ORDER BY ~ HAVING)
 	- HAVING 사용 시 주의사항
 	- WHERE 절과 함꼐 사용 시, GROUP BY 된 속성에 관한 조건만 제한할것.
 	- 그외의 속성은 WHERE 절에서 사용.
+
 1/24(강의자료 DML(2일차) - 부속질의)
 	- 가장 비싼 도서의 이름을 검색하시오.(중첩질의)
+
 	SELECT bookname FROM BOOK
 	WHERE price = (SELECT MAX(price) FROM BOOK);
+
 	-- 도서를 구매한 적이 있는 고객의 이름을 검색하시오.(중첩질의)
+
 	SELECT name 
 	FROM Customer
 	WHERE custid IN (SELECT custid FROM Orders);
+
 1/25(강의자료 DML(2일차) - INSERT, UPDATE, DELETE
 	- 수입도서 목록(릴레이션)을 BOOK 릴레이션에 모두 삽입.
+
 	INSERT INTO Book(bookid, bookname, price, publisher)
 		SELECT bookid, bookname, price, publisher
 		FROM Imported_book;
 	- UPDATE 구문, BOOK 테이블에서 14번 스포츠 의학의 출판사를 
 	  IMPORTED_BOOK 테이블의 21번 책의 출판사와 동일하게 변경.
+
+1/30(강의자료 3일차 - 부속질의_스칼라 부속질의
+	- 마당 서점의 고객별 판매액을 보이시오(고객이름과 고객별 판매액 출력)
+
+	SELECT (SELECT name FROM CUSTOMER WHERE CUSTOMER.custid = ORDERS.custid) 고객명,
+	SUM(saleprice) 총판매액 FROM ORDERS
+	GROUP BY ORDERS.custid;

@@ -1,0 +1,26 @@
+2023.01.31
+1일차 DML 내용(SELECT문 = 질의어) 복습
+
+SELECT [ALL | DISTINCT]  속성명(복수가능) - 어떤 속성을 검색
+FROM 테이블명(복수가능) - 어느 테이블의 속성을 검색
+[WHERE 검색 조건(복수가능)] - SELECT절 속성에 대한 검색 조건
+[GROUP BY 속성명] - 여러 레코드를 하나의 속성을 기준으로 동일한것 끼리 묶음.
+[HAVING 검색 조건(복수가능)] - GROUP BY된 속성에 대한 검색 조건
+[ORDER BY 속성명 [ASC | DESC]] - 정렬 기준
+
+추가
+ALL | DISTINCT : DISTINCT는 중복을 제거해주는 키워드이다.
+기본값은 ALL이며, 중복제거 없이 모든 레코드를 출력해준다.
+속성명에는 * 또는 AS 별칭이 추가 가능. * : 모든 속성 의미, AS 별칭 : 별명을 붙임
+FROM 절에 INNER JOIN | LEFT JOIN | RIGHT JOIN 테이블명 ON 검색 조건
+
+; -> 세미클론은 SQL-92 표준에서 정한 사항으로 끝에 항상 붙여준다.
+관례로 SQL 예약어는 대문자로, 테이블이나 속성명은 소문자로 적는 것이 관례이다.
+
+SELECT [ALL | DISTINCT] 속성명 * | AS 별칭
+FROM 테이블명
+	INNER JOIN | LEFT (OUTER)JOIN | RIGHT(OUTER) JOIN ON 검색 조건
+[WHERE 검색 조건]
+[GROUP BY 속성명]
+[HAVING 검색 조건]
+[ORDER BY 속성명 [ASC | DESC]]
