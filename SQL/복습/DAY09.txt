@@ -1,0 +1,26 @@
+2023.02.09
+DML 조작어 SELECT INSERT UPDATE DELETE
+
+1. UPDATE문
+    - 특정 속성 값을 수정하는 조작어
+
+    UPDATE 테이블명 // 무슨 테이블?
+    SET 속성명 = 값 // 어떤 속성을 어떻게?
+    WHERE 검색조건 // 일반적으로 해당 레코드를 의미하는 PRIMARY KEY로 지정함.
+
+    - UPDATE 문에서도 부속질의 사용 가능.(다른 테이블의 속성값을 검색할 경우)
+    UPDATE Book 
+    SET publisher=(SELECT publisher 
+            FROM Imported_book
+            WHERE bookid='21')
+    WHERE bookid='14';
+
+2. DELETE문
+    - 테이블에 있는 기존 투플 삭제하는 조작어
+    DELETE FROM 테이블명
+    WHERE 검색 조건;
+
+    모든 고객을 삭제하는 예시는 불가능하다. -> ORDERS 테이블에서 CUSTOMER.custid 속성을 외래키로 참조하고 있기 때문이다. 제약 조건이 해제되지 않으면 데이터 삭제가 중지된다.
+    
+    - DROP문 -> DDL 언어 -> 데이터와 구조 삭제
+    - DELETE문 -> DML 언어 -> 데이터만 삭제

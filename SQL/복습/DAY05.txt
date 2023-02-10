@@ -1,0 +1,9 @@
+2023.02.04
+GROUP BY와 HAVING 절의 문법과 주의사항
+- GROUP BY<속성>
+	1. GROUP BY로 투풀을 그룹으로 묶은 후 SELECT 절에는 GROUP BY에서
+	   사용한 속성과 집계 함수만 나올 수 있다.
+- HAVING <검색조건>
+	1. HAVING절은 반드시 GROUP BY절과 같이 작성해야 함.
+	2. WHERE절 보다 뒤에 나와야 한다.
+	3. <검색조건>에는 집계함수가 와야 한다.
