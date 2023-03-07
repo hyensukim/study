@@ -20,6 +20,7 @@
         YOU
     */
     ```
+
 ## char charAt(int index)
 - 해석 : 인덱스 주소의 문자를 반환함.
 - 예시
@@ -82,5 +83,22 @@
         |     |0000_0000 0000_0000 0000_0000 1111_1111 |
 
 ### 2의 보수 표현법?
+
+## int codePointAt(int index)
+- 해석 : index에 해당하는 문자를 Unicode 문자셋 기준 정수형으로 반환.
+- 예시
+    ```
+    String str1 = "Ahllo!";
+            int num1 = str1.codePointAt(0);
+            System.out.println(num1);
+
+    수행 결과
+        65
+    ```
+
+## int compareTo​(String anotherString)
+- 해석 : 문자열을 아스키 코드표 순서에 따라 정수의 차이를 반환해준다.
+- 아스키 코드 : 특문 -> 숫자 -> 특문 -> 영대문자 -> 특문 -> 영소문자 -> 특문
+
 
 # String과 StringBuffer 차이점
