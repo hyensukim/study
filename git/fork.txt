@@ -1,0 +1,11 @@
+Fork 기능
+
+1. fork할 프로젝트에 들어간다.
+
+2. 상단 오른쪽에 fork 버튼을 누른다.
+
+3. create fork 버튼을 눌러 자신의 원격 repository에 프로젝트가 생성된 것을 확인한다.
+
+- 즉 참여자가 저장소를 fork하고, fork한 자신의 저장소에 변경 사항을 적용한 다음 Push한다.
+- 이 후 원래 저장소(original repository)에 내 저장소에 있는 브랜치를 Pull Request 한다.
+- 관리자가 승인하면 원본 코드에 Merge 된다.

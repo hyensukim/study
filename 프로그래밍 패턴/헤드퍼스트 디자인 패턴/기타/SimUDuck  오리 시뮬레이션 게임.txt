@@ -1,0 +1,210 @@
+SimUDuck : 오리 시뮬레이션 게임
+
+<Chapter 1>=======================================================================
+초기 코드
+Duck - abstract class
+	quacK() : 오리가 꽥꽥 소리를 내는 기능(공통)
+	swim() : 오리가 헤엄치는 기능(공통)
+	abstract display() : 각 오리마다 외관이 다르므로 추상메서드로 정의
+
+MallardDuck extends Duck(물오리) 
+	display()
+
+RedheadDuck extends Duck(빨간머리오리)
+	display()
+
+
+- 경쟁사의 실적이 올라 압박받게 되면서 기능 추가를 피할 수 없게 됨.
+	기능추가 = 기능확장
+- 임원진에서 오리를 날리자는 결과가 나옴.
+
+
+
+<Chapter 2>==========================================================================
+개발자 조씨의 처음 생각
+- Super class에 fly() 기능을 추가하면, 나머지 Sub class에서 상속 받겠지라는 생각을 함.
+	- 상속의 장점 : 코드 재사용성 good
+		- 같은 기능을 각 클래스마다 따로 정의할 필요 없이 superClass에만 정의하면 된다. 
+
+
+수정 코드
+Duck - abstract class
+	quacK() : 오리가 꽥꽥 소리를 내는 기능(공통)
+	swim() : 오리가 헤엄치는 기능(공통)
+	abstract display() : 각 오리마다 외관이 다르므로 추상메서드로 정의
+	fly() : 나는 기능 추가
+
+MallardDuck extends Duck(물오리) 
+	display()
+
+RedheadDuck extends Duck(빨간머리오리)
+	display()
+
+* 문제 발생
+- subClass 중 RubberDuck 또는 DecoyDuck(가짜오리)와 같은 클래스에는 나는 기능을 상속 받으면
+  안된다.
+	- 상속의 단점 : 유지보수에 취약하다.
+		- 일부 subClass는 기능을 상속받지 않아야 하는데, 상속하게 되면 이와 상관없이 모든
+		  subClass에게 기능을 상속하여 관리에 어려움이 있다.
+		- 물론, 상속 받지 않을 subClass에 메서드를 오버라이드하면 되지만, 이는 서브 클래스 		  숫자가 많아질수록 일일히 수정하기 힘들기도 하고 수정 주기가 짧아질수록 관리가 어려		   워 진다. 
+		- 또한, superClass의 기능을 모두 사용하지 않는 가짜오리와 같은 subClass가 있는 경우
+		  또한 난감하다. 이럴거면 아예 따로 만드는게 나을까 하는 생각도 든다.
+
+<Chapter3>===========================================================================
+
+위 처럼 상속의 단점이 워낙 커서 상속을 통해 기능을 확장하고 코드를 재사용하는 것을 포기했다...
+
+그렇다면 대안은? -> Inteface로 설계하기이다!!
+
+대안
+- Duck의 기능 중에서 subClass에 포함되는 내용이 달라지는 기능을 Interface로 설계하여
+  필요한 subClass에서 이를 구현하여 사용하도록 설계함.
+
+대안 코드
+Duck - abstract class
+	swim() : 오리가 헤엄치는 기능(공통)
+	abstract display() : 각 오리마다 외관이 다르므로 추상메서드로 정의
+
+	Flyable - interface
+		fly()
+
+	Quackable - interface
+		quack()
+
+MallardDuck extends Duck implements Flyable, Quackable(물오리) 
+	display(){구현코드}
+	fly(){구현코드}
+	quack(){구현코드}
+
+RedheadDuck extends Duck implements Flyable, Quackable(빨간머리오리)
+	display(){구현코드}
+	fly(){구현코드}
+	quack(){구현코드}
+
+RubberDuck extends Duck implements Quackable(고무오리)
+	display(){구현코드}
+	quack(){구현코드}
+
+DecoyDuck extends Duck(가짜오리)
+	display(){구현코드}
+
+* 문제 발생
+- interface 구현 시 각 subClass 내부에 일일히 구현 코드를 작성해줘야 한다.
+- 이로인해, 동일한 기능인 fly()는 동일한 코드를 각 클래스마다 똑같이 작성해야 하는 
+  코드 중복의 문제가 발생한다.
+
+<Chapter4-1>==========================================================================
+
+* 지금까지 문제 정리
+- 프로그램에 추가 및 수정 사항 발생 시 기존에 작성했던 코드를 수정해야 하는 경우가 발생함...
+- 이를 최소한으로 하는것이 객체 지향 프로그래밍의 핵심!!
+
+* 각 subClass에서 interface를 구현할 경우 문제점
+- 코드 재사용이 불가능.
+- 기능을 바꿀 때마다 행동이 정의되어 있는 모든 subClass를 찾아서 일일히 바꿔줘야 한고 이로 인해
+  버그가 발생할 수도 있음.
+
+* 디자인 원칙*
+- 프로그램에서 달라지는 부분을 찾아내고, 달라지지 않는 부분과 분리한다.
+- 달라지는 부분을 분리하여 별도의 클래스로 만든다음 이를 참조하는 변수를 캡슐화해준다.
+	- 그러면 코드를 변경하는 과정에서 의도치 않게 발생하는 일을 줄이면서 시스템의 유연성을 향상
+	  시킬 수 있다.
+	- 즉, 프로그램의 일부를 다른 부분과는 독립적으로 변경할 수 있다.
+
+- 분리하는 부분은 자주 바뀌는 부분을 의미하며, 현재 Duck 클래스에서는 fly와 quack 기능이 있다.
+
+- 이를, 별도의 클래스 집합으로 만들어 준다.
+	- 나는 기능에 관련된 클래스들은 FlyBehavior 인터페이스를 구현하도록 한다.
+	- 꽥꽥 기능에 관련된 클래스들은 QuackBehavior 인터페이스를 구현하도록 한다.
+	- 이러한 클래스 집합들은 최대한 유연성을 높히고,
+	- Duck 인터페이스에 행동을 할당할 수 있어야 하며,
+	- 객체를 동적으로 바꿀 수 있도록 디자인 해준다.
+
+*디자인 원칙*
+- 구현 보다는 인터페이스에 맞춰서 프로그래밍 한다.
+- 즉, Duck의 기능 중 분리한 기능은 별도의 클래스 안에 구현되어 있으므로, Duck 클래스에서는 행동을 구체적으로 구현할 필요가 없이, 가져와 쓰기만 하면 된다.
+- 주의할 점은 여기서 인터페이스가 실제 자바의 인터페이스만 사용해서 코딩하라는 뜻이 아니다. 핵심은 실제 실행 시에 쓰이는 객체가 코드에 고정되지 않도록 상위 형식에 맞춰 프로그래밍하여 다형성을 활용해야 한다는 점이다.
+	- 즉, 변수의 타입을 추상화하여 다형성에 의해 이를 구현한 모든 객체가 대입될 수 있도록 해준다.
+
+<Chapter4-2>==========================================================================
+
+- 위처럼 디자인 원칙에 따라 코드를 수정하면 
+
+대안 코드
+Duck - abstract class
+
+	FlyBehavior flyBehavior;
+	QuackBehavior quackBehavior;
+
+	swim() : 오리가 헤엄치는 기능(공통)
+	abstract display() : 각 오리마다 외관이 다르므로 추상메서드로 정의
+	performFly() {: 
+	flyBehavior.fly();
+	}
+	performQuack(){ : 
+	quackBehaviot.quack();
+	}
+
+interface FlyBehavior
+	fly();
+
+class FlyWithWings implements FlyBehavior
+	fly() 구현;
+...
+
+interface QuackBehavior
+	quack();
+
+class Quack implements QuackBehavior
+	quack() 구현;
+...
+
+MallardDuck extends Duck implements Flyable, Quackable(물오리) 
+	display(){구현코드}
+	
+	public MallarDuck(){ //생성자 식을 통해 상속받은 멤버변수 초기화하여 행동 지정.
+		quackBehavior = new Quack();
+		flyBehavior = new FlyWithWings();
+	}
+
+RedheadDuck extends Duck implements Flyable, Quackable(빨간머리오리)
+	display(){구현코드}
+	public RedHeadDuck(){ //생성자 식을 통해 상속받은 멤버변수 초기화하여 행동 지정.
+		quackBehavior = new Quack();
+		flyBehavior = new FlyWithWings();
+	}
+
+RubberDuck extends Duck implements Quackable(고무오리)
+	display(){구현코드}
+	//생성자 메서드 내 기능을 구현한 클래스 중 객체의 기능에 맞는 기능 객체로 최기화.
+
+DecoyDuck extends Duck(가짜오리)
+	display(){구현코드}
+	//생성자 메서드 내 기능을 구현한 클래스 중 객체의 기능에 맞는 기능 객체로 최기화.
+
+*디자인 원칙*
+- 상속보다는 구성을 활용한다.
+- 구성이란 Duck 클래스 내 기능을 FlyBehavior과 QuackBehavior과 같이 클래스 집합에 위임 후
+   필요한 기능의 클래스 객체를 변수에 담아 구성함으로서 기능을 확장하는 개념을 말한다.
+- 이처럼 프로그램을 디자인 하게되면 상속보다 훨씬 유연한 프로그램을 만들 수 있다.
+
+<last Chapter>=================================================================
+- 위처럼 SimUDuck 프로그램을 유연하고 유지보수에 용이한 코드로 바꾼 디자인 패턴을 
+  전략패턴 이라고 한다.
+- 전략패턴(Strategy Pattern) 알고리즘군(클래스집합)을 정의하고 캡슐화해서 각각의 알고리즘군을
+  수정해서 쓸 수 있게 해준다. 전략 패턴을 사용하면 클라이언트로부터 알고리즘을 분리해서 독립적
+  으로 변경할 수 있다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

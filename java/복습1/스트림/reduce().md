@@ -9,19 +9,35 @@
 
 ## reduce()
 - count()와 sum() 등은 내부적으로 모두 reduce()를 이용해서 작성되어 있다.
-```
-int count = intStream.reduce(0,(a,b) -> a+1 );
-int sum = intStream.reduce(0,(a,b) -> a + b);
-int max = intStream.reduce(Integer.MIN_VALUE,(a,b) -> a>b?a:b)
-int max = intStream.reduce(Integer.MAX_VALUE,(a,b) -> a<b?a:b)
-```
+    ```
+    int count = intStream.reduce(0,(a,b) -> a+1 );
+    int sum = intStream.reduce(0,(a,b) -> a + b);
+    int max = intStream.reduce(Integer.MIN_VALUE,(a,b) -> a>b?a:b)
+    int max = intStream.reduce(Integer.MAX_VALUE,(a,b) -> a<b?a:b)
+    ```
 
 - reduce()의 내부 동작
-```
-T reduce(T identity, BinaryOperator<T> accumulator){
-    T a = identity
-    for(T b : stream)
-        a = accumulator.apply(a,b);
-    return a;
-}
-```
+    ```
+    T reduce(T identity, BinaryOperator<T> accumulator){
+        T a = identity
+        for(T b : stream)
+            a = accumulator.apply(a,b);
+        return a;
+    }
+    ```
+
+- reduce() 예시
+    ```
+    public class Ex07 {
+	public static void main(String[] args) {
+		int total = IntStream.rangeClosed(1, 100)
+											.reduce(0, (a,b) -> {
+												System.out.printf("a=%d, b=%d%n", a,b);
+												
+												return a+b;
+											});
+		System.out.println(total);
+						
+        }
+	}
+    ```
